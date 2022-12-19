@@ -3,8 +3,12 @@ import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
@@ -32,8 +36,29 @@ public class NewFirstTest {
 
     @Test
     public void searchFirstLocator () {
-        WebElement element = driver.findElementByXPath("//*[contains(@text,'Search Wikipedia')]");
-        element.click();
+        WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text,'Search Wikipedia')]");
+        element_to_init_search.click();
+
+        WebElement element_to_enter_search_line = waitForElementPresentByXpah(
+                "//*[contains(@text,'Search…')]",
+                "Cannot find search input"
+        );
+        element_to_enter_search_line.sendKeys("Appium");
+    }
+
+    private WebElement waitForElementPresentByXpah (String xpath,String error_message, long timeoutIntSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutIntSeconds);
+        wait.withMessage(error_message + "\n");
+        By by = By.xpath(xpath);
+        //By by = By.id(id);
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+        );
+    }
+
+    private WebElement waitForElementPresentByXpah (String xpath,String error_message) {
+        return
+                waitForElementPresentByXpah(xpath,error_message,5);
     }
 
     @Test
