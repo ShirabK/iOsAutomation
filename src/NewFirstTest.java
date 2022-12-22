@@ -68,6 +68,12 @@ public class NewFirstTest {
         return element;
     }
 
+    private WebElement waitForElementAndClear (By by, String error_message, long timeoutSeconds) {
+        WebElement element = waitForElementPresent(by,error_message, timeoutSeconds);
+        element.clear();
+        return element;
+    }
+
     @Test
     public void firstTest() {
         System.out.println("First test run");
@@ -171,17 +177,42 @@ public class NewFirstTest {
         WebElement title_element = waitForElementPresent(
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Cannot find page title",
-                15
+                20
         );
 
-        String article_title = title_element.getText();
+        String article_title = title_element.getAttribute("text");
 
         Assert.assertEquals (
                 "We see unexpected title",
                 "Java (programming language)",
                 article_title
         );
-
     }
 
+    @Test
+    public void testClearSearch () {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find 'X' to cancel button",
+                5
+        );
+    }
 }
