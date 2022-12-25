@@ -25,7 +25,7 @@ public class NewFirstTest {
         capabilities.setCapability("automationName","Appium");
         capabilities.setCapability("appPackage","org.wikipedia");
         capabilities.setCapability("appActivity",".main.MainActivity");
-        capabilities.setCapability("app","/Users/shirab.k/Desktop/JavaApiumA/JavaApiumA/apks/org.wikipedia.apk");
+        capabilities.setCapability("app","/Users/shirab.k/Desktop/JavaApiumA/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
     }
@@ -180,7 +180,7 @@ public class NewFirstTest {
                 20
         );
 
-        String article_title = title_element.getAttribute("text");
+        String article_title = title_element.getText();
 
         Assert.assertEquals (
                 "We see unexpected title",
