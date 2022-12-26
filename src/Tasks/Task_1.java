@@ -110,4 +110,43 @@ public class Task_1 {
                 5
         );
     }
+
+    @Test
+    public void  testClearSearchAfterRequest() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/search_empty_text"),
+                "No results found",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find 'X' to cancel button",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find 'X' to cancel button",
+                5
+        );
+
+        waitForElementPresent(
+          By.id("org.wikipedia:id/search_empty_message"),
+                "Search result are present",
+                5
+        );
+    }
 }
