@@ -3,7 +3,9 @@ package Tasks;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -71,5 +73,41 @@ public class Task_1 {
         WebElement element = waitForElementPresent(by,error_message, timeoutSeconds);
         element.clear();
         return element;
+    }
+
+    private WebElement assertElementHasTex (By by, String expected_text, String error_message, long timeoutSeconds) {
+        WebElement text = waitForElementPresent(by, error_message, timeoutSeconds);
+
+        String expected = text.getText();
+
+        Assert.assertEquals(
+                error_message,
+                expected_text,
+                expected
+        );
+
+        return text;
+    }
+
+    @Test
+    public void testElementHasText () {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        assertElementHasTex(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Search field not contain 'Java' text",
+                5
+        );
     }
 }
