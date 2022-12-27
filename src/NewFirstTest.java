@@ -15,8 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class NewFirstTest {
-    private AppiumDriver driver;
+public class NewFirstTest extends Metods{
 
     @Before
     public void setUp () throws Exception{
@@ -35,55 +34,6 @@ public class NewFirstTest {
     @After
     public void tearDown() {
         driver.quit();
-    }
-
-    private WebElement waitForElementPresent(By by, String error_message, long timeoutIntSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoutIntSeconds);
-        wait.withMessage(error_message + "\n");
-        return wait.until(
-                ExpectedConditions.presenceOfElementLocated(by)
-        );
-    }
-
-    private boolean waitForElementNotPresent (By by, String error_message, long timeoutSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoutSeconds);
-        wait.withMessage(error_message + "\n");
-        return wait.until(
-                ExpectedConditions.invisibilityOfElementLocated(by)
-        );
-    }
-
-    private WebElement waitForElementPresent(By by, String error_message) {
-        return
-                waitForElementPresent(by,error_message,5);
-    }
-
-    private WebElement waitForElementAndClick (By by, String error_message, long timeoutSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeoutSeconds);
-        element.click();
-        return element;
-    }
-
-    private WebElement waitForElementAndSendKeys (By by, String value, String error_message, long timeoutSeconds) {
-        WebElement element = waitForElementPresent(by,error_message, timeoutSeconds);
-        element.sendKeys(value);
-        return element;
-    }
-
-    private WebElement waitForElementAndClear (By by, String error_message, long timeoutSeconds) {
-        WebElement element = waitForElementPresent(by,error_message, timeoutSeconds);
-        element.clear();
-        return element;
-    }
-
-    protected void swipeUp (int timeOfSwipe) {
-        TouchAction action = new TouchAction(driver);
-        Dimension size = driver.manage().window().getSize();
-        int x = size.width/2;
-        int start_y = (int) (size.height * 0.8);
-        int end_y = (int) (size.height * 0.2);
-
-        action.press(x,start_y).waitAction(timeOfSwipe).moveTo(x,end_y).release().perform();
     }
 
     @Test
@@ -192,7 +142,7 @@ public class NewFirstTest {
                 20
         );
 
-        String article_title = title_element.getText();
+        String article_title = title_element.getAttribute("text");
 
         Assert.assertEquals (
                 "We see unexpected title",
