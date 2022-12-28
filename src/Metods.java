@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class Metods {
     public AppiumDriver driver;
     protected WebElement waitForElementPresent(By by, String error_message, long timeoutIntSeconds) {
@@ -45,6 +47,11 @@ public class Metods {
         WebElement element = waitForElementPresent(by,error_message, timeoutSeconds);
         element.clear();
         return element;
+    }
+
+    public String waitForElementAndGetAttribute (By by, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(by,error_message, timeoutInSeconds);
+        return element.getText();
     }
 
     public void swipeUp (int timeOfSwipe) {
@@ -102,5 +109,19 @@ public class Metods {
                 .moveTo(left_x,middle_y)
                 .release()
                 .perform();
+    }
+
+    public int getAmountOfElements (By by) {
+        List element = driver.findElements(by);
+        return element.size();
+    }
+
+    public void assertElementNotPresent (By by, String error_message) {
+        int amount_of_element = getAmountOfElements(by);
+
+        if (amount_of_element > 0) {
+            String default_message = "An element '" + by.toString() + "' supported to be to not present";
+            throw new AssertionError(default_message + " " + error_message);
+        }
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class NewFirstTest extends Metods{
 
@@ -261,7 +263,10 @@ public class NewFirstTest extends Metods{
         );
 
         waitForElementAndClick(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                By.xpath("" +
+                        "//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
+                        "//*[@text='Object-oriented programming language']"
+                ),
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 5
         );
@@ -328,7 +333,10 @@ public class NewFirstTest extends Metods{
         );
 
         waitForElementAndClick(
-                By.xpath("//*[@text='" + name_of_folder + "']"),
+                By.xpath("//*[@text='"
+                        + name_of_folder
+                        + "']"
+                ),
                 "Cannot find created folder list article",
                 5
         );
@@ -347,6 +355,171 @@ public class NewFirstTest extends Metods{
         waitForElementNotPresent(
                 By.xpath("//*[@text='Java (programming language)']"),
                 "Cannot delete saved article",
+                5
+        );
+    }
+
+    @Test
+    public void testAmountOfNotEmptySearch () {
+        String search_line = "Joseph Stalin and antisemitism"; //Linkin Park Discography
+        String search_result_locator =
+                "//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                "/*[@resource-id='org.wikipedia:id/page_list_item_container']";
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_line,
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath(search_result_locator),
+                "Cannot find request " + search_result_locator,
+                5
+        );
+
+        int amount_of_search_results = getAmountOfElements(
+                By.xpath(search_result_locator)
+        );
+
+        Assert.assertTrue(
+                "We found few results",
+                amount_of_search_results > 0
+        );
+    }
+
+    @Test
+    public void testAmountOfEmptySearch () {
+        String search_line = "DSVEFSDFWFSDFE";
+        String search_result_locator =
+                "//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                        "/*[@resource-id='org.wikipedia:id/page_list_item_container']";
+        String empty_result_empty = "//*[@text='No results found']";
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_line,
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath(empty_result_empty),
+                "Cannot find empty result label by request " + search_line,
+                5
+        );
+
+        assertElementNotPresent(
+                By.xpath(search_result_locator),
+                "We found some results by request"
+        );
+    }
+
+    @Test
+    public void testChangeScreenOrientationOnSearchResults () {
+        String search_line = "Java";
+        String search_result_locator =
+                "//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                        "/*[@resource-id='org.wikipedia:id/page_list_item_container']";
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_line,
+                "Cannot find 'Object-oriented programming language' topic searching by " + search_line,
+                10
+        );
+
+        waitForElementAndClick(
+                By.xpath("" +
+                        "//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
+                        "//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                5
+        );
+
+        String title_before_rotation = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find title of article",
+                5
+        );
+
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+
+        String title_after_rotation = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find title of article",
+                5
+        );
+
+        Assert.assertEquals(
+                "Article title have been change after rotation",
+                title_before_rotation,
+                title_after_rotation
+        );
+
+        driver.rotate(ScreenOrientation.PORTRAIT);
+
+        String title_second_rotation = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find title of article",
+                5
+        );
+
+        Assert.assertEquals(
+                "Article title have been change after rotation",
+                title_before_rotation,
+                title_second_rotation
+        );
+    }
+
+    @Test
+    public void testCheckSearchArticleInBackGround () {
+        String search_line = "Java";
+        String search_text = "'Object-oriented programming language'";
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_line,
+                "Cannot find " + search_text + " topic searching by " + search_line,
+                10
+        );
+
+        waitForElementPresent(
+                By.xpath("" +
+                        "//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
+                        "//*[@text='Object-oriented programming language']"),
+                "Cannot find " + search_text + " topic searching by 'Java'",
+                5
+        );
+
+        driver.runAppInBackground(4);
+
+        waitForElementPresent(
+                By.xpath("" +
+                        "//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
+                        "//*[@text='Object-oriented programming language']"),
+                "Cannot find " + search_text + " article after returning from background",
                 5
         );
     }
