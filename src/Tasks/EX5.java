@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -149,6 +150,15 @@ public class EX5 {
         if (amount_of_element > 0) {
             String default_message = "An element '" + by.toString() + "' supported to be to not present";
             throw new AssertionError(default_message + " " + error_message);
+        }
+    }
+
+    private void assertElementPresent (By by, String error_message) {
+        int found_element = getAmountOfElements(by);
+
+        if (found_element == 0) {
+            String message = "An element " + by.toString() + " not present";
+            throw new AssertionError(message + " " + error_message );
         }
     }
 
@@ -311,6 +321,35 @@ public class EX5 {
                 By.xpath(second_article_locator),
                 "Cannot delete saved article",
                 5
+        );
+    }
+
+    @Test
+    public void testSearchTitleArticle () {
+        String search_element = "//*[@resource-id='org.wikipedia:id/view_page_header_container']" +
+                "//*[@resource-id='org.wikipedia:id/view_page_title_text']";
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                5
+        );
+
+        assertElementPresent(
+            By.xpath(search_element),
+                "We not found search element"
         );
     }
 }
