@@ -1,3 +1,5 @@
+package lib.ui;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.By;
@@ -8,9 +10,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class Metods {
-    public AppiumDriver driver;
-    protected WebElement waitForElementPresent(By by, String error_message, long timeoutIntSeconds) {
+public class MainPageObject {
+    protected AppiumDriver driver;
+
+    public MainPageObject (AppiumDriver driver) {
+
+        this.driver = driver;
+    }
+
+    public WebElement waitForElementPresent(By by, String error_message, long timeoutIntSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutIntSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(
