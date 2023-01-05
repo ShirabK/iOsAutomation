@@ -1,6 +1,5 @@
 import lib.CoreTestCase;
-import lib.ui.MainPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -19,7 +18,7 @@ public class NewFirstTest extends CoreTestCase{
     }
 
     @Test
-    public void firstTest() {
+    public void testFirstTest() {
         System.out.println("First test run");
     }
 
@@ -60,6 +59,7 @@ public class NewFirstTest extends CoreTestCase{
         );*/
 
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
@@ -67,7 +67,7 @@ public class NewFirstTest extends CoreTestCase{
 
     @Test
     public void  testCancelSearch() {
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -78,6 +78,7 @@ public class NewFirstTest extends CoreTestCase{
                 "Cannot find search input",
                 5
         );
+
         MainPageObject.waitForElementPresent(
                 By.id("org.wikipedia:id/search_close_btn"),
                 "Cannot find 'X' to cancel button",
@@ -100,12 +101,20 @@ public class NewFirstTest extends CoreTestCase{
                 By.id("org.wikipedia:id/search_close_btn"),
                 "'X' still present on the page",
                 5
-        );
+        );*/
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.waitForCancelButtonToDisappear();
     }
 
     @Test
     public void testCompareArticleTitle () {
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -130,6 +139,25 @@ public class NewFirstTest extends CoreTestCase{
         );
 
         String article_title = title_element.getText();
+
+        Assert.assertEquals (
+                "We see unexpected title",
+                "Java (programming language)",
+                article_title
+        );*/
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+
+        ArticlePageObject.waitForTitleElement();
+        ArticlePageObject.getArticleTitle();
+
+        String article_title = ArticlePageObject.getArticleTitle();
 
         Assert.assertEquals (
                 "We see unexpected title",
@@ -200,7 +228,7 @@ public class NewFirstTest extends CoreTestCase{
 
     @Test
     public void testSwipeADownToFooter () {
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -228,12 +256,23 @@ public class NewFirstTest extends CoreTestCase{
                 By.id("org.wikipedia:id/page_external_link"),
                 "Cannot find  the end of the article",
                 5
-        );
+        );*/
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Appium");
+        SearchPageObject.clickByArticleWithSubString("Automation for Apps");
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+
+        ArticlePageObject.waitForTitleElement();
+        ArticlePageObject.swipeToFooter();
     }
     @Test
-    public void saveFirstArticleToMyListTitle () {
+    public void testSaveFirstArticleToMyListTitle() {
 
-        String name_of_folder = "Java";
+/*        String name_of_folder = "Java";
 
         MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
@@ -319,13 +358,11 @@ public class NewFirstTest extends CoreTestCase{
 
         MainPageObject.waitForElementAndClick(
                 By.xpath("//*[@text='"
-                        + name_of_folder
-                        + "']"
+                        + name_of_folder + "']"
                 ),
                 "Cannot find created folder list article",
                 5
         );
-
         MainPageObject.waitForElementPresent(
                 By.xpath("//*[@text='Java (programming language)']"),
                 "Cannot find added article 'Java (programming language)'",
@@ -342,6 +379,29 @@ public class NewFirstTest extends CoreTestCase{
                 "Cannot delete saved article",
                 5
         );
+        */
+
+        String name_of_folder = "Java";
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
+
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject.waitForTitleElement();
+        ArticlePageObject.getArticleTitle();
+        String article_title = ArticlePageObject.getArticleTitle();
+        ArticlePageObject.addArticleToMyList(name_of_folder);
+        ArticlePageObject.closeArticle();
+
+        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI.clickMyLists();
+
+        MyListObject MyListPageObject = new MyListObject(driver);
+        MyListPageObject.openFolderByName(name_of_folder);
+        MyListPageObject.swipeByArticleToDelete(article_title);
+        MyListPageObject.waitForArticleToDisappearByTitle(article_title);
     }
 
     @Test
