@@ -12,6 +12,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
@@ -153,7 +154,7 @@ public class EX5 {
         }
     }
 
-    private void assertElementPresent (By by, String error_message) {
+    private void assertElementPresent (By by, String error_message, long timeoutInSeconds) {
         int found_element = getAmountOfElements(by);
 
         if (found_element == 0) {
@@ -349,7 +350,8 @@ public class EX5 {
 
         assertElementPresent(
             By.xpath(search_element),
-                "We not found search element"
+                "We not found search element",
+                10
         );
     }
 }

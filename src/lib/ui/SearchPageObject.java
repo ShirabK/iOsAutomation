@@ -10,7 +10,9 @@ public class SearchPageObject extends MainPageObject{
         SEARCH_INPUT = "//*[contains(@text,'Search…')]",
         SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
 
-        SEARCH_CANCEL_BUTTON = "//android.widget.ImageView[@content-desc='Clear query']"; //"org.wikipedia:id/search_close_btn"
+        SEARCH_CANCEL_BUTTON = "//android.widget.ImageView[@content-desc='Clear query']", //"org.wikipedia:id/search_close_btn"
+        SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
+        SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -23,8 +25,8 @@ public class SearchPageObject extends MainPageObject{
     // Template methods
 
     public void initSearchInput () {
-        this.waitForElementAndClick(By.xpath(SEARCH_INIT_ELEMENT),"Cannot find search and click search init element", 5);
         this.waitForElementPresent(By.xpath(SEARCH_INIT_ELEMENT), "Cannot find search input after clicking search init element");
+        this.waitForElementAndClick(By.xpath(SEARCH_INIT_ELEMENT),"Cannot find search and click search init element", 5);
     }
 
     public void typeSearchLine (String search_line) {
@@ -51,5 +53,22 @@ public class SearchPageObject extends MainPageObject{
 
     public void clickCancelSearch () {
         this.waitForElementAndClick(By.xpath(SEARCH_CANCEL_BUTTON), "Cannot find and click search cancel button", 5);
+    }
+
+    public int getAmountOfFoundArticle () {
+        this.waitForElementPresent(
+                By.xpath(SEARCH_RESULT_ELEMENT),
+                "Cannot find anything by the request ",
+                5
+        );
+        return this.getAmountOfElements(By.xpath(SEARCH_RESULT_ELEMENT));
+    }
+
+    public void waitForEmptyResultsLabel () {
+        this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT),"Cannot find empty result element", 5);
+    }
+
+    public void assertThereIsNoResultOfSearch () {
+        this.waitForElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not to find any results",5);
     }
 }
