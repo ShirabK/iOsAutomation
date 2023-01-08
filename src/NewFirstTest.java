@@ -3,7 +3,7 @@ import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-//ываовыаолываошыоуашыуташгытуа
+
 public class NewFirstTest extends CoreTestCase{
 
 /*Убрали так как объект больше не будет использоваться
