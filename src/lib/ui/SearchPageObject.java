@@ -68,6 +68,14 @@ public class SearchPageObject extends MainPageObject{
         this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT),"Cannot find empty result element", 5);
     }
 
+    public void waitForSomeOneResultSearch () {
+        this.waitForElementNotPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT),"Nothing was found for the specified query", 5);
+    }
+
+    public void waitForEmptySearchContainerAfterClear() {
+        this.waitForElementNotPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT),"Search container has not been cleaned", 5);
+    }
+
     public void assertThereIsNoResultOfSearch () {
         this.waitForElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not to find any results",5);
     }

@@ -2,6 +2,7 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
@@ -124,12 +125,35 @@ public class MainPageObject {
         return element.size();
     }
 
-    public void assertElementNotPresent (By by, String error_message) {
+/*    public void assertElementNotPresent (By by, String error_message) {
         int amount_of_element = getAmountOfElements(by);
 
         if (amount_of_element > 0) {
             String default_message = "An element '" + by.toString() + "' supported to be to not present";
             throw new AssertionError(default_message + " " + error_message);
+        }
+    }*/
+
+    public WebElement assertElementHasTex (By by, String expected_text, String error_message, long timeoutSeconds) {
+        WebElement text = waitForElementPresent(by, error_message, timeoutSeconds);
+
+        String expected = text.getText();
+
+        Assert.assertEquals(
+                error_message,
+                expected_text,
+                expected
+        );
+
+        return text;
+    }
+
+    public void assertElementPresent (By by, String error_message, long timeoutInSeconds) {
+        int found_element = getAmountOfElements(by);
+
+        if (found_element == 0) {
+            String message = "An element " + by.toString() + " not present";
+            throw new AssertionError(message + " " + error_message );
         }
     }
 }
