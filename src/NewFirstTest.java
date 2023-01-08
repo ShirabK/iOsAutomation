@@ -2,20 +2,18 @@ import lib.CoreTestCase;
 import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
 
 
 public class NewFirstTest extends CoreTestCase{
 
+/*Убрали так как объект больше не будет использоваться
     private MainPageObject MainPageObject;
 
     protected void setUp () throws Exception{
         super.setUp();
 
         MainPageObject = new MainPageObject(driver);
-    }
+    }*/
 
     @Test
     public void testFirstTest() {
@@ -25,7 +23,7 @@ public class NewFirstTest extends CoreTestCase{
     @Test
     public void testFirstSearchLocator() {
 
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -35,7 +33,11 @@ public class NewFirstTest extends CoreTestCase{
                 "Appium",
                 "Cannot find search input",
                 5
-        );
+        );*/
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Appium");
+
     }
 
     @Test
@@ -168,7 +170,7 @@ public class NewFirstTest extends CoreTestCase{
 
     @Test
     public void testClearSearch () {
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -190,12 +192,18 @@ public class NewFirstTest extends CoreTestCase{
                 By.id("org.wikipedia:id/search_close_btn"),
                 "Cannot find 'X' to cancel button",
                 5
-        );
+        );*/
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.clickCancelSearch();
     }
 
     @Test
     public void testSwipeArticle () {
-        MainPageObject.waitForElementAndClick(
+/*        MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia input'",
                 5);
@@ -222,8 +230,16 @@ public class NewFirstTest extends CoreTestCase{
         MainPageObject.swipeUp(2000);
         MainPageObject.swipeUp(2000);
         MainPageObject.swipeUp(2000);
-        MainPageObject.swipeUp(2000);
+        MainPageObject.swipeUp(2000);*/
 
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
+
+        this.SwipeUp(2000);
+        this.SwipeUp(2000);
     }
 
     @Test
@@ -444,7 +460,7 @@ public class NewFirstTest extends CoreTestCase{
         SearchPageObject.getAmountOfFoundArticle();
 
         int amount_of_search_results = SearchPageObject.getAmountOfFoundArticle();
-        Assert.assertTrue(
+        assertTrue(
                 "We found few results",
                 amount_of_search_results > 0
         );
@@ -562,7 +578,7 @@ public class NewFirstTest extends CoreTestCase{
 
         String title_after_rotation = ArticlePageObject.getArticleTitle();
 
-        Assert.assertEquals(
+        assertEquals(
                 "Article title have been change after rotation",
                 title_before_rotation,
                 title_after_rotation
@@ -572,7 +588,7 @@ public class NewFirstTest extends CoreTestCase{
 
         String title_after_second_rotation = ArticlePageObject.getArticleTitle();
 
-        Assert.assertEquals(
+        assertEquals(
                 "Article title have been change after rotation",
                 title_before_rotation,
                 title_after_second_rotation);
