@@ -57,7 +57,7 @@ public class EX6 extends CoreTestCase {
         MainPageObject MainPageObject = new MainPageObject (driver);
 
         MainPageObject.assertElementPresent(
-                By.xpath(search_element),
+                search_element,
                 "We not found search element",
                 10
         );

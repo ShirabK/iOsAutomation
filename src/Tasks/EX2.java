@@ -28,13 +28,14 @@ public class EX2 extends CoreTestCase {
                 "Search field not contain 'Java' text",
                 5
         );*/
+        String locator = "//*[@resource-id='org.wikipedia:id/search_src_text']";
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
 
         MainPageObject MainPageObject = new MainPageObject(driver);
-        MainPageObject.assertElementHasTex(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"),
+        MainPageObject.assertElementHasTex(locator,
                 "Java",
                 "Search field not contain 'Java' text",
                 5);
