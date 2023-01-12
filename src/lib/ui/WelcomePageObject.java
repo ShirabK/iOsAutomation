@@ -16,7 +16,8 @@ public class WelcomePageObject extends MainPageObject {
     ADD_OR_EDIT_PREFERRED_LANG_TEXT = "id:Add or edit preferred languages",
 
     LEARN_MORE_ABOUT_DATA_COLLECT_TEXT= "id:Learn more about data collected",
-    GET_STARTED = "id:Get started";
+    GET_STARTED = "id:Get started",
+    SKIP = "id:Skip"; //XCUIElementTypeButton[@name="Skip"]
 
 
     public void waitForLearnMoreLink () {
@@ -53,5 +54,11 @@ public class WelcomePageObject extends MainPageObject {
         this.waitForElementAndClick(GET_STARTED,
                 "Cannot find 'Get started' button and click",
                 10);
+    }
+
+    public void clickSkip() {
+        this.waitForElementAndClick(SKIP,
+                "Cannot find and click skip button",
+                5);
     }
 }

@@ -2,13 +2,12 @@ package lib;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import junit.framework.TestCase;
+import lib.ui.WelcomePageObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 
 import java.net.URL;
@@ -17,20 +16,14 @@ import java.time.Duration;
 public class CoreTestCase extends TestCase {
     protected AppiumDriver driver;
 
-    private static final String PLATFORM_ANDROID = "android";
-    private static final String PLATFORM_IOS = "ios";
-    private static String AppiumURL = "http://127.0.0.1:4723/wd/hub";
-
-
     @Override
     protected void setUp () throws Exception{
 
         super.setUp();
 
-        DesiredCapabilities capabilities = this.getCapabilitiesByPlatformEnv();
-
-        driver = new AndroidDriver(new URL(AppiumURL),capabilities);
+        driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
+        this.skipWelcomePageForIOSApp();
     }
 
     @Override
@@ -68,7 +61,14 @@ public class CoreTestCase extends TestCase {
                     .perform();
     }
 
-    private DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
+    private  void skipWelcomePageForIOSApp () {
+        if (Platform.getInstance().isIOS()) {
+            WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
+            WelcomePageObject.clickSkip();
+        }
+    }
+
+/*    private DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
         String platform = System.getenv("PLATFORM");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -90,5 +90,5 @@ public class CoreTestCase extends TestCase {
             throw new Exception("Cannot get platform from env variable. Platform value " + platform);
         }
         return capabilities;
-    }
+    }*/
 }

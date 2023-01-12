@@ -5,13 +5,14 @@ import lib.ui.ArticlePageObject;
 import lib.ui.MyListObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase {
     public void testSaveFirstArticleToMyListTitle() {
 
         String name_of_folder = "Java";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");

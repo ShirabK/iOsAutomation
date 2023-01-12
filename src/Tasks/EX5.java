@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.MyListObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 public class EX5 extends CoreTestCase {
 
@@ -175,7 +176,7 @@ public class EX5 extends CoreTestCase {
         String second_article = "Western animation inspired by anime (Japanese animation)";
 
         //Add first article
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(search_text);
         SearchPageObject.clickByArticleWithSubString(first_article);

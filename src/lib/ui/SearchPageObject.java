@@ -1,18 +1,17 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
-public class SearchPageObject extends MainPageObject{
+abstract public class SearchPageObject extends MainPageObject{
 
-    private static final String
-        SEARCH_INIT_ELEMENT = "xpath://*[contains(@text,'Search Wikipedia')]",
-        SEARCH_INPUT = "xpath://*[contains(@text,'Search…')]",
-        SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
-
-        SEARCH_CANCEL_BUTTON = "xpath://android.widget.ImageView[@content-desc='Clear query']", //"org.wikipedia:id/search_close_btn"
-        SEARCH_RESULT_ELEMENT = "xpath://*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
-        SEARCH_EMPTY_RESULT_ELEMENT = "xpath://*[@text='No results found']";
+    protected static String
+        SEARCH_INIT_ELEMENT,
+        SEARCH_INPUT,
+        SEARCH_RESULT_BY_SUBSTRING_TPL,
+        SEARCH_CANCEL_BUTTON, //"org.wikipedia:id/search_close_btn"
+        SEARCH_CLEAR_FIELD_IOS,
+        SEARCH_RESULT_ELEMENT,
+        SEARCH_EMPTY_RESULT_ELEMENT;
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -53,6 +52,10 @@ public class SearchPageObject extends MainPageObject{
 
     public void clickCancelSearch () {
         this.waitForElementAndClick(SEARCH_CANCEL_BUTTON, "Cannot find and click search cancel button", 5);
+    }
+
+    public void clickSearchSearch () {
+        this.waitForElementAndClick(SEARCH_CLEAR_FIELD_IOS, "Cannot find and click search cancel button", 5);
     }
 
     public int getAmountOfFoundArticle () {
