@@ -58,8 +58,8 @@ public class Platform {
     private DesiredCapabilities getIOSDesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName","iOS");
-        capabilities.setCapability("deviceName","iPhone 8");
-        capabilities.setCapability("platformVersion","12.0");
+        capabilities.setCapability("deviceName","iPhone 14 Pro");
+        capabilities.setCapability("platformVersion","16.2");
         capabilities.setCapability("app","/Users/shirab.k/Desktop/iOsAutomation/apks/Wikipedia.app");
         return capabilities;
     }

@@ -1,22 +1,23 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import javax.xml.bind.Element;
 
-public class ArticlePageObject extends MainPageObject {
-    private static final String
-    TITLE = "xpath://*[@resource-id='org.wikipedia:id/view_page_title_text']",
-    FOOTER_ELEMENT = "xpath://*[@resource-id='org.wikipedia:id/page_external_link']",
-    OPTIONS_BUTTON = "xpath://*[@content-desc='More options']",
-    OPTIONS_ADD_TO_MY_LIST_BUTTON = "xpath://*[@text='Add to reading list']",
-    ADD_TO_MY_LIST_OVERLAY= "xpath://*[@resource-id='org.wikipedia:id/onboarding_button']",
-    MY_LIST_NAME_INPUT = "xpath://*[@resource-id='org.wikipedia:id/text_input']",
-    MY_LIST_OKAY_BUTTON = "xpath://*[@resource-id='android:id/button1']",
-    CLOSE_ARTICLE_BUTTON = "xpath://*[@content-desc='Navigate up']",
-    CREATED_FOLDER_IN_MY_LIST = "xpath://*[@resource-id='org.wikipedia:id/item_container']//*[@text='{FOLDER_NAME}']";
+abstract public class ArticlePageObject extends MainPageObject {
+    protected static String
+    TITLE,
+    FOOTER_ELEMENT,
+    OPTIONS_BUTTON,
+    OPTIONS_ADD_TO_MY_LIST_BUTTON,
+    ADD_TO_MY_LIST_OVERLAY,
+    MY_LIST_NAME_INPUT,
+    MY_LIST_OKAY_BUTTON,
+    CLOSE_ARTICLE_BUTTON,
+    CREATED_FOLDER_IN_MY_LIST;
 
     private static String getXpathFolderName (String folder_name) {
         return CREATED_FOLDER_IN_MY_LIST.replace("{FOLDER_NAME}", folder_name);
@@ -31,15 +32,27 @@ public class ArticlePageObject extends MainPageObject {
 
     public String getArticleTitle () {
         WebElement title_element = waitForTitleElement();
-        return title_element.getText();
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getText();
+        } else {
+            return title_element.getText();
+        }
     }
 
     public void swipeToFooter () {
-        this.swipeUpToFindElement(
-                FOOTER_ELEMENT,
-                "Cannot find the and of article",
-                20
-        );
+        if (Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "Cannot find the and of article",
+                    20
+            );
+        } else {
+            this.swipeUpTitleElementAppear(
+                    FOOTER_ELEMENT,
+                    "Cannot find the and of article",
+                    50
+            );
+        }
     }
 
     public void addArticleToMyList (String name_of_folder) {
@@ -83,6 +96,15 @@ public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClick(
                 MY_LIST_OKAY_BUTTON,
                 "Cannot find or press 'OK' button to create folder",
+                5
+        );
+    }
+
+    public void addArticleToMySaved (String name_of_folder) {
+
+        this.waitForElementAndClick(
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find button to add article to reading list",
                 5
         );
     }

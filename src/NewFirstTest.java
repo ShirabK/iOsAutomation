@@ -1,5 +1,8 @@
 import lib.CoreTestCase;
 import lib.ui.*;
+import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.MyListsPageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
@@ -155,7 +158,7 @@ public class NewFirstTest extends CoreTestCase{
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.getArticleTitle();
@@ -281,7 +284,7 @@ public class NewFirstTest extends CoreTestCase{
         SearchPageObject.typeSearchLine("Appium");
         SearchPageObject.clickByArticleWithSubString("Automation for Apps");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.swipeToFooter();
@@ -405,17 +408,17 @@ public class NewFirstTest extends CoreTestCase{
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.getArticleTitle();
         String article_title = ArticlePageObject.getArticleTitle();
         ArticlePageObject.addArticleToMyList(name_of_folder);
         ArticlePageObject.closeArticle();
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyLists();
 
-        MyListObject MyListPageObject = new MyListObject(driver);
+        MyListObject MyListPageObject = MyListsPageObjectFactory.get(driver);
         MyListPageObject.openFolderByName(name_of_folder);
         MyListPageObject.swipeByArticleToDelete(article_title);
         MyListPageObject.waitForArticleToDisappearByTitle(article_title);
@@ -571,7 +574,7 @@ public class NewFirstTest extends CoreTestCase{
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         String title_before_rotation = ArticlePageObject.getArticleTitle();
 
