@@ -9,7 +9,8 @@ public class IOSNavigationUI extends NavigationUI {
     }
 
     static {
-        MY_LISTS_LINK = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
+        MY_LISTS_LINK = "xpath://XCUIElementTypeButton[@name='Saved']";
+        CLOSE_AUTH_IN_SAVED_PAGE = "xpath://XCUIElementTypeButton[@name='Close']";
     }
 
 }

@@ -22,17 +22,20 @@ public class MyListsTests extends CoreTestCase {
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        ArticlePageObject.waitForTitleElement();
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.waitForTitleElement();
+        }
+
         ArticlePageObject.getArticleTitle();
         String article_title = ArticlePageObject.getArticleTitle();
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyList(name_of_folder);
+            ArticlePageObject.closeArticle();
         } else {
-            ArticlePageObject.addArticleToMyList(name_of_folder);
+            ArticlePageObject.addArticleToMySaved();
+            ArticlePageObject.GoToMainPage();
         }
-
-        ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyLists();
@@ -43,10 +46,16 @@ public class MyListsTests extends CoreTestCase {
             MyListPageObject.openFolderByName(name_of_folder);
             MyListPageObject.swipeByArticleToDelete(article_title);
         } else {
-
+            NavigationUI.closeAuthPage();
+            MyListPageObject.swipeByArticleToDeleteForIOS();
         }
 
+        if (Platform.getInstance().isAndroid()) {
+            MyListPageObject.waitForArticleToDisappearByTitle(article_title);
+        } else {
+            NavigationUI.closeAuthPage();
+            MyListPageObject.waitForArticleToDisappearByTitleForIOS();
+        }
 
-        MyListPageObject.waitForArticleToDisappearByTitle(article_title);
     }
 }

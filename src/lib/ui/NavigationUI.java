@@ -1,7 +1,6 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
 abstract public class NavigationUI extends MainPageObject{
     public NavigationUI(AppiumDriver driver) {
@@ -9,12 +8,21 @@ abstract public class NavigationUI extends MainPageObject{
     }
 
     protected static String
-            MY_LISTS_LINK = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
+            MY_LISTS_LINK,
+            CLOSE_AUTH_IN_SAVED_PAGE;
 
     public void clickMyLists() {
         this.waitForElementAndClick(
                 MY_LISTS_LINK,
                 "Cannot find 'My lists' button and click",
+                5
+        );
+    }
+
+    public void closeAuthPage () {
+        this.waitForElementAndClick(
+                CLOSE_AUTH_IN_SAVED_PAGE,
+                "Cannot find 'X' button and click on AuthPage",
                 5
         );
     }

@@ -2,6 +2,7 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import lib.Platform;
@@ -131,7 +132,7 @@ public class MainPageObject {
     }
 
     public void clickElementToTheRightUpperCorner (String locator, String error_message){
-        WebElement element = waitForElementPresent(locator + "/..",error_message);
+        WebElement element = this.waitForElementPresent(locator,error_message); //(locator + "/..",error_message)
 
         int right_x = element.getLocation().getX();
         int upper_y = element.getLocation().getY();
@@ -144,10 +145,11 @@ public class MainPageObject {
 
         TouchAction action = new TouchAction(driver);
         action.tap(PointOption.point(point_to_click_x,point_to_click_y)).perform();
+        //(PointOption.point(point_to_click_x,point_to_click_y))
 
     }
 
-    public void swipeElementOfLeft (String locator, String error_message) {
+    public void swipeElementToLeft(String locator, String error_message) {
         WebElement element = waitForElementPresent(
                 locator,
                 error_message,

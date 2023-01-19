@@ -2,10 +2,7 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import javax.xml.bind.Element;
 
 abstract public class ArticlePageObject extends MainPageObject {
     protected static String
@@ -17,7 +14,11 @@ abstract public class ArticlePageObject extends MainPageObject {
     MY_LIST_NAME_INPUT,
     MY_LIST_OKAY_BUTTON,
     CLOSE_ARTICLE_BUTTON,
-    CREATED_FOLDER_IN_MY_LIST;
+    CREATED_FOLDER_IN_MY_LIST,
+    BUTTON_CREATED_READ_LIST,
+    BUTTON_ADD_FOLDER,
+    CLOSE_SEARCH_TOOL,
+    GO_TO_MAIN_PAGE;
 
     private static String getXpathFolderName (String folder_name) {
         return CREATED_FOLDER_IN_MY_LIST.replace("{FOLDER_NAME}", folder_name);
@@ -32,11 +33,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public String getArticleTitle () {
         WebElement title_element = waitForTitleElement();
-        if (Platform.getInstance().isAndroid()) {
-            return title_element.getText();
-        } else {
-            return title_element.getText();
-        }
+        return title_element.getText();
     }
 
     public void swipeToFooter () {
@@ -100,8 +97,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void addArticleToMySaved (String name_of_folder) {
-
+    public void addArticleToMySaved () {
         this.waitForElementAndClick(
                 OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find button to add article to reading list",
@@ -131,8 +127,15 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void closeArticle () {
+            this.waitForElementAndClick(
+                    CLOSE_ARTICLE_BUTTON,
+                    "Cannot find close article, cannot find 'x' click",
+                    5
+            );
+    }
+    public void GoToMainPage () {
         this.waitForElementAndClick(
-                CLOSE_ARTICLE_BUTTON,
+                GO_TO_MAIN_PAGE,
                 "Cannot find close article, cannot find 'x' click",
                 5
         );
