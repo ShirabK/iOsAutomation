@@ -1,5 +1,9 @@
 import lib.CoreTestCase;
 import lib.ui.*;
+import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.MyListsPageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +38,7 @@ public class NewFirstTest extends CoreTestCase{
                 "Cannot find search input",
                 5
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Appium");
 
@@ -60,7 +64,7 @@ public class NewFirstTest extends CoreTestCase{
                 5
         );*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -104,7 +108,7 @@ public class NewFirstTest extends CoreTestCase{
                 "'X' still present on the page",
                 5
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -148,13 +152,13 @@ public class NewFirstTest extends CoreTestCase{
                 article_title
         );*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.getArticleTitle();
@@ -194,7 +198,7 @@ public class NewFirstTest extends CoreTestCase{
                 5
         );*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickCancelSearch();
@@ -232,7 +236,7 @@ public class NewFirstTest extends CoreTestCase{
         MainPageObject.swipeUp(2000);
         MainPageObject.swipeUp(2000);*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -274,13 +278,13 @@ public class NewFirstTest extends CoreTestCase{
                 5
         );*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Appium");
         SearchPageObject.clickByArticleWithSubString("Automation for Apps");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.swipeToFooter();
@@ -399,22 +403,22 @@ public class NewFirstTest extends CoreTestCase{
 
         String name_of_folder = "Java";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.getArticleTitle();
         String article_title = ArticlePageObject.getArticleTitle();
         ArticlePageObject.addArticleToMyList(name_of_folder);
         ArticlePageObject.closeArticle();
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyLists();
 
-        MyListObject MyListPageObject = new MyListObject(driver);
+        MyListObject MyListPageObject = MyListsPageObjectFactory.get(driver);
         MyListPageObject.openFolderByName(name_of_folder);
         MyListPageObject.swipeByArticleToDelete(article_title);
         MyListPageObject.waitForArticleToDisappearByTitle(article_title);
@@ -453,7 +457,7 @@ public class NewFirstTest extends CoreTestCase{
                 "We found few results",
                 amount_of_search_results > 0
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Joseph Stalin and antisemitism");
@@ -497,7 +501,7 @@ public class NewFirstTest extends CoreTestCase{
                 "We found some results by request"
         );*/
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("DSVEFSDFWFSDFE");
@@ -565,12 +569,12 @@ public class NewFirstTest extends CoreTestCase{
                 title_before_rotation,
                 title_second_rotation
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         String title_before_rotation = ArticlePageObject.getArticleTitle();
 
@@ -628,7 +632,7 @@ public class NewFirstTest extends CoreTestCase{
                 "Cannot find " + search_text + " article after returning from background",
                 5
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForSearchResult("Object-oriented programming language");

@@ -3,6 +3,7 @@ package Tasks;
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -48,7 +49,7 @@ public class EX6 extends CoreTestCase {
         String search_element = "//*[@resource-id='org.wikipedia:id/view_page_header_container']" +
                 "//*[@resource-id='org.wikipedia:id/view_page_title_text']";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -57,7 +58,7 @@ public class EX6 extends CoreTestCase {
         MainPageObject MainPageObject = new MainPageObject (driver);
 
         MainPageObject.assertElementPresent(
-                By.xpath(search_element),
+                search_element,
                 "We not found search element",
                 10
         );

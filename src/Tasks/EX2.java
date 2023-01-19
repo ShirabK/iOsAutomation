@@ -3,6 +3,7 @@ package Tasks;
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -28,13 +29,14 @@ public class EX2 extends CoreTestCase {
                 "Search field not contain 'Java' text",
                 5
         );*/
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        String locator = "//*[@resource-id='org.wikipedia:id/search_src_text']";
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
 
         MainPageObject MainPageObject = new MainPageObject(driver);
-        MainPageObject.assertElementHasTex(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"),
+        MainPageObject.assertElementHasTex(locator,
                 "Java",
                 "Search field not contain 'Java' text",
                 5);
