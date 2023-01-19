@@ -12,7 +12,8 @@ abstract public class MyListObject extends MainPageObject{
     protected static String
     FOLDER_BY_NAME_TPL,
     ARTICLE_BY_TITLE_TPL,
-    FIRST_ARTICLE_BY_JAVA;
+    FIRST_ARTICLE_BY_JAVA,
+    SECOND_ARTICLE_BY_JAVA;
 
     private static String getFolderXpathByName (String name_of_folder) {
         return FOLDER_BY_NAME_TPL.replace("{FOLDER_NAME}", name_of_folder);
@@ -55,7 +56,7 @@ abstract public class MyListObject extends MainPageObject{
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
-    public void swipeByArticleToDeleteForIOS() {
+    public void swipeFirstArticleToDeleteForIOS() {
 
         this.swipeElementToLeft(
                 FIRST_ARTICLE_BY_JAVA,
@@ -70,6 +71,23 @@ abstract public class MyListObject extends MainPageObject{
         }
 
         this.waitForArticleToDisappearByTitle(FIRST_ARTICLE_BY_JAVA);
+    }
+
+    public void swipeSecondArticleToDeleteForIOS() {
+
+        this.swipeElementToLeft(
+                SECOND_ARTICLE_BY_JAVA,
+                "Cannot find saved article"
+        );
+
+        if (Platform.getInstance().isIOS()) {
+            this.clickElementToTheRightUpperCorner(
+                    SECOND_ARTICLE_BY_JAVA,
+                    "Cannot find saved article"
+            );
+        }
+
+        this.waitForArticleToDisappearByTitle(SECOND_ARTICLE_BY_JAVA);
     }
 
     public void waitForArticleToAppearByTitle (String article_title) {
@@ -94,11 +112,19 @@ abstract public class MyListObject extends MainPageObject{
         );
     }
 
-    public void waitForArticleToDisappearByTitleForIOS () {
+    public void waitForArticleToDisappearByTitleForIOSFirstArticle() {
 
         this.waitForElementNotPresent(
                 FIRST_ARTICLE_BY_JAVA,
                 "Saved article still present with title " + FIRST_ARTICLE_BY_JAVA,
+                5
+        );
+    }
+    public void waitForArticleToDisappearByTitleForIOSSecondArticle() {
+
+        this.waitForElementNotPresent(
+                SECOND_ARTICLE_BY_JAVA,
+                "Saved article still present with title " + SECOND_ARTICLE_BY_JAVA,
                 5
         );
     }

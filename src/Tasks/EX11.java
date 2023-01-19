@@ -63,11 +63,11 @@ public class EX11 extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             MyListPageObject.openFolderByName(name_of_folder);
             MyListPageObject.swipeByArticleToDelete(second_article);
+            MyListPageObject.waitForArticleToDisappearByTitle(second_article);
         } else {
             NavigationUI.closeAuthPage();
-            MyListPageObject.swipeByArticleToDelete(second_article);
+            MyListPageObject.swipeSecondArticleToDeleteForIOS();
+            MyListPageObject.waitForArticleToDisappearByTitleForIOSSecondArticle();
         }
-
-        MyListPageObject.waitForArticleToDisappearByTitle(second_article);
     }
 }

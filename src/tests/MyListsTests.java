@@ -47,14 +47,14 @@ public class MyListsTests extends CoreTestCase {
             MyListPageObject.swipeByArticleToDelete(article_title);
         } else {
             NavigationUI.closeAuthPage();
-            MyListPageObject.swipeByArticleToDeleteForIOS();
+            MyListPageObject.swipeFirstArticleToDeleteForIOS();
         }
 
         if (Platform.getInstance().isAndroid()) {
             MyListPageObject.waitForArticleToDisappearByTitle(article_title);
         } else {
             NavigationUI.closeAuthPage();
-            MyListPageObject.waitForArticleToDisappearByTitleForIOS();
+            MyListPageObject.waitForArticleToDisappearByTitleForIOSFirstArticle();
         }
 
     }
