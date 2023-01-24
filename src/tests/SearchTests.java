@@ -1,7 +1,6 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.Platform;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
@@ -51,13 +50,8 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForCancelButtonToAppear();
-        if (Platform.getInstance().isAndroid()) {
-            SearchPageObject.clickCancelSearch();
-            SearchPageObject.clickCancelSearch();
-            SearchPageObject.waitForCancelButtonToDisappear();
-        } else {
-            SearchPageObject.clickSearchSearch();
-            SearchPageObject.waitForCancelButtonToDisappearIOS();
-        }
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.waitForCancelButtonToDisappear();
     }
 }
