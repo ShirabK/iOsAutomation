@@ -8,7 +8,7 @@ abstract public class SearchPageObject extends MainPageObject{
         SEARCH_INIT_ELEMENT,
         SEARCH_INPUT,
         SEARCH_RESULT_BY_SUBSTRING_TPL,
-        SEARCH_CANCEL_BUTTON, //"org.wikipedia:id/search_close_btn"
+        SEARCH_CANCEL_BUTTON,
         SEARCH_CLEAR_FIELD_IOS,
         SEARCH_RESULT_ELEMENT,
         SEARCH_EMPTY_RESULT_ELEMENT;
@@ -48,6 +48,10 @@ abstract public class SearchPageObject extends MainPageObject{
 
     public void waitForCancelButtonToDisappear () {
         this.waitForElementNotPresent(SEARCH_CANCEL_BUTTON, "Search cancel button is still present", 5);
+    }
+
+    public void waitForCancelButtonToDisappearIOS () {
+        this.waitForElementNotPresent(SEARCH_CLEAR_FIELD_IOS, "Search cancel button is still present", 5);
     }
 
     public void clickCancelSearch () {
