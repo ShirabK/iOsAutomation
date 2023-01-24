@@ -1,7 +1,6 @@
 package Tasks;
 
 import lib.CoreTestCase;
-import lib.Platform;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
@@ -12,11 +11,24 @@ public class EX2 extends CoreTestCase {
 
     @Test
     public void testElementHasText () {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
+/*        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia input'",
+                5);
 
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        assertElementHasTex(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Search field not contain 'Java' text",
+                5
+        );*/
         String locator = "//*[@resource-id='org.wikipedia:id/search_src_text']";
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 

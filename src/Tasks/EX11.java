@@ -16,10 +16,6 @@ public class EX11 extends CoreTestCase {
 
     @Test
     public void testSavingTwoArticle () {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
 
         String name_of_folder = "Java language";
         String search_text = "Java";

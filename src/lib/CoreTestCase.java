@@ -9,6 +9,8 @@ import lib.ui.WelcomePageObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
 
+
+import java.net.URL;
 import java.time.Duration;
 
 public class CoreTestCase extends TestCase {
@@ -21,6 +23,7 @@ public class CoreTestCase extends TestCase {
 
         driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
+        this.skipWelcomePageForIOSApp();
     }
 
     @Override
@@ -50,6 +53,7 @@ public class CoreTestCase extends TestCase {
             int end_y = (int) (size.height * 0.2);
 
             action
+                    /*.press(x, start_y)*/
                     .press(PointOption.point(x, start_y))
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(timeOfSwipe)))
                     .moveTo(PointOption.point(x, end_y))
@@ -57,10 +61,34 @@ public class CoreTestCase extends TestCase {
                     .perform();
     }
 
-    public   void skipWelcomePageForIOSApp () {
+    private  void skipWelcomePageForIOSApp () {
         if (Platform.getInstance().isIOS()) {
             WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
             WelcomePageObject.clickSkip();
         }
     }
+
+/*    private DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
+        String platform = System.getenv("PLATFORM");
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        if (platform.equals(PLATFORM_ANDROID)) {
+            capabilities.setCapability("platformName","Android");
+            capabilities.setCapability("deviceName","And8");
+            capabilities.setCapability("platformVersion","Android 10.0");
+            capabilities.setCapability("automationName","Appium");
+            capabilities.setCapability("appPackage","org.wikipedia");
+            capabilities.setCapability("appActivity",".main.MainActivity");
+            capabilities.setCapability("app","/Users/shirab.k/Desktop/JavaApiumA/apks/org.wikipedia.apk");
+        } else if (platform.equals(PLATFORM_IOS)) {
+            capabilities.setCapability("platformName","iOS");
+            capabilities.setCapability("deviceName","iPhone 8");
+            capabilities.setCapability("platformVersion","12.0");
+            capabilities.setCapability("app","/Users/shirab.k/Desktop/iOsAutomation/apks/Wikipedia.app");
+        } else {
+            throw new Exception("Cannot get platform from env variable. Platform value " + platform);
+        }
+        return capabilities;
+    }*/
 }

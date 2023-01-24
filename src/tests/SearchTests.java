@@ -13,10 +13,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testFirstSearchLocator() {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -26,10 +22,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testSearchJava() {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -40,10 +32,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void  testCancelSearch() {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 

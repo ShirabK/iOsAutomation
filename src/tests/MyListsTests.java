@@ -13,10 +13,6 @@ import lib.ui.factories.SearchPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase {
     public void testSaveFirstArticleToMyListTitle() {
-        if (Platform.getInstance().isIOS()) {
-            CoreTestCase CoreTestCase = new CoreTestCase();
-            CoreTestCase.skipWelcomePageForIOSApp();
-        }
 
         String name_of_folder = "Java";
 
@@ -57,6 +53,7 @@ public class MyListsTests extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             MyListPageObject.waitForArticleToDisappearByTitle(article_title);
         } else {
+            NavigationUI.closeAuthPage();
             MyListPageObject.waitForArticleToDisappearByTitleForIOS();
         }
 
