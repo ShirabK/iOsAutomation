@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.ArticlePageObject;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
@@ -13,6 +14,11 @@ public class FirstTest extends CoreTestCase {
 
     @Test
     public void testCompareArticleTitle () {
+        if (Platform.getInstance().isIOS()) {
+            CoreTestCase CoreTestCase = new CoreTestCase();
+            CoreTestCase.skipWelcomePageForIOSApp();
+        }
+
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -36,6 +42,10 @@ public class FirstTest extends CoreTestCase {
 
     @Test
     public void testSwipeArticle () {
+        if (Platform.getInstance().isIOS()) {
+            CoreTestCase CoreTestCase = new CoreTestCase();
+            CoreTestCase.skipWelcomePageForIOSApp();
+        }
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 

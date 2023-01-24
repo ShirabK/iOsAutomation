@@ -15,6 +15,10 @@ public class EX5 extends CoreTestCase {
 
     @Test
     public void testSavingTwoArticle () {
+        if (Platform.getInstance().isIOS()) {
+            CoreTestCase CoreTestCase = new CoreTestCase();
+            CoreTestCase.skipWelcomePageForIOSApp();
+        }
 
         String name_of_folder = "Japanese animation article";
         String search_text = "Anime";
